@@ -1,0 +1,30 @@
+version: '3'
+
+# some docker services are disabled temporarily due to the lack of time to configure them
+
+services:
+  bot:
+    container_name: bot
+    restart: always
+    command: ["sync-command"]
+    depends_on:
+      - mongodb
+      # - redis
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    # volumes:
+      # - mongodb_data:/data/db
+  # redis:
+  #   image: redis:latest
+  #   command: ["redis-server", "--bind", "redis", "--port", "6379"]
+
+volumes:
+  mongodb_data:
+  # redis_data:
